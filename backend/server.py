@@ -74,7 +74,7 @@ class AuctionDB(Base):
     bid_increment = Column(Float, nullable=False)
     creator_id = Column(String, ForeignKey('users.id'), nullable=False)
     creator_name = Column(String, nullable=False)
-    end_time = Column(DateTime, nullable=False)
+    end_time = Column(DateTime(timezone=True), nullable=False)
     status = Column(String, default="active")  # active or ended
     winner_id = Column(String, nullable=True)
     winner_name = Column(String, nullable=True)

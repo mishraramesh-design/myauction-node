@@ -54,3 +54,7 @@ Thumbs.db
 # Keep .env template but ignore actual secrets
 # .env (this file is tracked with placeholder values)
 frontend/node_modules/.cache/default-development/0.pack
+-e 
+# Environment files
+*.env
+*.env.*

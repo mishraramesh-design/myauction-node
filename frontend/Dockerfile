@@ -1,34 +1,25 @@
-# React Frontend Dockerfile - Multi-stage build
-FROM node:20-alpine as build
+# ---------- Build stage ----------
+FROM node:20 AS build
 
-# Set working directory
 WORKDIR /app
 
-# Copy frontend package files
-COPY frontend/package*.json ./
-COPY frontend/yarn.lock ./
+COPY package*.json ./
 
-# Install dependencies
-RUN yarn install --frozen-lockfile
+# Fix CRA + CRACO + AJV incompatibility
+RUN npm install --legacy-peer-deps \
+  && npm install ajv@8 ajv-keywords@5 --legacy-peer-deps
 
-# Copy frontend source code
-COPY frontend/ ./
+COPY . .
 
-# Build argument for backend URL
-ARG REACT_APP_BACKEND_URL=http://localhost:8001
-ENV REACT_APP_BACKEND_URL=$REACT_APP_BACKEND_URL
+# CRA / CRACO build
+ENV CI=false
+RUN npm run build
 
-# Build the app
-RUN yarn build
-
-# Production stage with nginx
+# ---------- Runtime stage ----------
 FROM nginx:alpine
 
-# Copy built app from build stage
 COPY --from=build /app/build /usr/share/nginx/html
 
-# Expose ports
-EXPOSE 80 443
+EXPOSE 80
 
-# Start nginx
 CMD ["nginx", "-g", "daemon off;"]

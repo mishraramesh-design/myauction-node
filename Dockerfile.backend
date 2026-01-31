@@ -1,0 +1,20 @@
+# Node.js Backend Dockerfile
+FROM node:20-alpine
+
+# Set working directory
+WORKDIR /app
+
+# Copy package files
+COPY backend/package*.json ./
+
+# Install dependencies
+RUN npm install --production
+
+# Copy backend source
+COPY backend/ ./
+
+# Expose port
+EXPOSE 8001
+
+# Start server
+CMD ["node", "server.js"]

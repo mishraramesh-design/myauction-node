@@ -38,6 +38,7 @@ jobs:
           context: ./frontend
           file: ./frontend/Dockerfile
           push: true
+          no-cache: true
           build-args: |
             REACT_APP_BACKEND_URL=http://93.127.194.188:8001
           tags: mishramesh/myauction-frontend:latest

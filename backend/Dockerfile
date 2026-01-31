@@ -1,26 +1,25 @@
-# Node.js Backend Dockerfile
-FROM node:20-alpine
+# ---------- Build stage ----------
+FROM node:20 AS build
 
-# Install postgresql-client for database operations
-RUN apk add --no-cache postgresql-client wget
-
-# Set working directory
 WORKDIR /app
 
-# Copy backend package files
-COPY backend/package*.json ./
+COPY package*.json ./
 
-# Install dependencies
-RUN npm install --production
+# Fix CRA + CRACO + AJV incompatibility
+RUN npm install --legacy-peer-deps \
+  && npm install ajv@8 ajv-keywords@5 --legacy-peer-deps
 
-# Copy backend application code
-COPY backend/ ./
+COPY . .
 
-# Make entrypoint executable
-RUN chmod +x /app/entrypoint.sh
+# CRA / CRACO build
+ENV CI=false
+RUN npm run build
 
-# Expose port
-EXPOSE 8001
+# ---------- Runtime stage ----------
+FROM nginx:alpine
 
-# Use entrypoint script
-ENTRYPOINT ["/app/entrypoint.sh"]
+COPY --from=build /app/build /usr/share/nginx/html
+
+EXPOSE 80
+
+CMD ["nginx", "-g", "daemon off;"]

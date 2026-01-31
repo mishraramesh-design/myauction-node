@@ -3,23 +3,18 @@ FROM node:20-alpine AS build
 
 WORKDIR /app
 
-COPY package*.json ./
+COPY package.json yarn.lock ./
 
-# Clean, deterministic install
-RUN npm install --legacy-peer-deps
-
-# CRA + CRACO + AJV fix (pin once, not twice)
-RUN npm install ajv@8 ajv-keywords@5 --save-exact --legacy-peer-deps
+# Use Yarn (matches packageManager)
+RUN corepack enable && yarn install --frozen-lockfile
 
 COPY . .
 
-# Accept build-time args from GitHub Actions
 ARG REACT_APP_BACKEND_URL
 ENV REACT_APP_BACKEND_URL=$REACT_APP_BACKEND_URL
 ENV CI=false
 
-# Debug-friendly build
-RUN npm run build --verbose
+RUN yarn build
 
 # ---------- Runtime stage ----------
 FROM nginx:alpine

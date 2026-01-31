@@ -60,7 +60,7 @@ class UserDB(Base):
     email = Column(String, unique=True, nullable=False, index=True)
     name = Column(String, nullable=False)
     password_hash = Column(String, nullable=False)
-    created_at = Column(DateTime, default=lambda: datetime.now(timezone.utc))
+    created_at = Column(DateTime(timezone=True), default=lambda: datetime.now(timezone.utc))
 
 class AuctionDB(Base):
     __tablename__ = "auctions"
@@ -80,7 +80,7 @@ class AuctionDB(Base):
     winner_name = Column(String, nullable=True)
     bid_count = Column(Integer, default=0)
     image_url = Column(String, nullable=True)
-    created_at = Column(DateTime, default=lambda: datetime.now(timezone.utc))
+    created_at = Column(DateTime(timezone=True), default=lambda: datetime.now(timezone.utc))
 
 class BidDB(Base):
     __tablename__ = "bids"
@@ -91,7 +91,7 @@ class BidDB(Base):
     user_name = Column(String, nullable=False)
     amount = Column(Float, nullable=False)
     is_auto_bid = Column(Boolean, default=False)
-    created_at = Column(DateTime, default=lambda: datetime.now(timezone.utc))
+    created_at = Column(DateTime(timezone=True), default=lambda: datetime.now(timezone.utc))
 
 class AutoBidDB(Base):
     __tablename__ = "auto_bids"
@@ -101,7 +101,7 @@ class AutoBidDB(Base):
     user_id = Column(String, ForeignKey('users.id'), nullable=False)
     max_amount = Column(Float, nullable=False)
     is_active = Column(Boolean, default=True)
-    created_at = Column(DateTime, default=lambda: datetime.now(timezone.utc))
+    created_at = Column(DateTime(timezone=True), default=lambda: datetime.now(timezone.utc))
 
 class NotificationDB(Base):
     __tablename__ = "notifications"
@@ -111,7 +111,7 @@ class NotificationDB(Base):
     message = Column(Text, nullable=False)
     auction_id = Column(String, ForeignKey('auctions.id'), nullable=False)
     is_read = Column(Boolean, default=False)
-    created_at = Column(DateTime, default=lambda: datetime.now(timezone.utc))
+    created_at = Column(DateTime(timezone=True), default=lambda: datetime.now(timezone.utc))
 
 # Pydantic Models for API
 class UserCreate(BaseModel):

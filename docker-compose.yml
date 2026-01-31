@@ -1,19 +1,23 @@
-version: '3.8'
-
 services:
   # Backend API Service
   backend:
     build:
-      context: ./backend
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: backend/Dockerfile
+    image: auction-backend:latest
     container_name: reverse_auction_backend
     restart: always
     environment:
       NODE_ENV: production
       PORT: 8001
       DATABASE_URL: postgresql://appuser:apppassword@93.127.194.188:5432/appdb
-      JWT_SECRET: ${JWT_SECRET:-your-jwt-secret-change-in-production-min-32-chars}
-      ENCRYPTION_KEY: ${ENCRYPTION_KEY:-your-32-character-encryption-key}
+      DB_HOST: 93.127.194.188
+      DB_PORT: 5432
+      DB_NAME: appdb
+      DB_USER: appuser
+      DB_PASSWORD: apppassword
+      JWT_SECRET: ${JWT_SECRET:-reverse-auction-jwt-secret-change-this-abc123xyz}
+      ENCRYPTION_KEY: ${ENCRYPTION_KEY:-32-char-encryption-key-change-1}
       MAX_ITEMS_PER_TENDER: ${MAX_ITEMS_PER_TENDER:-2}
       CORS_ORIGINS: ${CORS_ORIGINS:-*}
     ports:
@@ -32,10 +36,11 @@ services:
   # Frontend Service
   frontend:
     build:
-      context: ./frontend
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: frontend/Dockerfile
       args:
         REACT_APP_BACKEND_URL: ${REACT_APP_BACKEND_URL:-http://localhost:8001}
+    image: auction-frontend:latest
     container_name: reverse_auction_frontend
     restart: always
     ports:

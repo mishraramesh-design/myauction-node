@@ -1,17 +1,18 @@
+# React Frontend Dockerfile - Multi-stage build
 FROM node:20-alpine as build
 
 # Set working directory
 WORKDIR /app
 
-# Copy package files
-COPY package*.json ./
-COPY yarn.lock ./
+# Copy frontend package files
+COPY frontend/package*.json ./
+COPY frontend/yarn.lock ./
 
 # Install dependencies
 RUN yarn install --frozen-lockfile
 
-# Copy source code
-COPY . .
+# Copy frontend source code
+COPY frontend/ ./
 
 # Build argument for backend URL
 ARG REACT_APP_BACKEND_URL=http://localhost:8001
@@ -20,13 +21,11 @@ ENV REACT_APP_BACKEND_URL=$REACT_APP_BACKEND_URL
 # Build the app
 RUN yarn build
 
-# Production stage
+# Production stage with nginx
 FROM nginx:alpine
 
-# Copy built app
+# Copy built app from build stage
 COPY --from=build /app/build /usr/share/nginx/html
-
-# Copy nginx config will be mounted as volume
 
 # Expose ports
 EXPOSE 80 443

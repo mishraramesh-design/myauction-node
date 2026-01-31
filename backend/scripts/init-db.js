@@ -231,12 +231,15 @@ const initializeDatabase = async () => {
 
     // Create default admin user (password: admin123)
     const bcrypt = require('bcryptjs');
-    const adminPasswordHash = await bcrypt.hash('admin123', 10);
+    const salt = await bcrypt.genSalt(10);
+    const adminPasswordHash = await bcrypt.hash('admin123', salt);
+    
+    console.log('Creating admin user with password: admin123');
     
     await client.query(`
       INSERT INTO users (email, password_hash, name, role, is_active)
       VALUES ($1, $2, $3, $4, $5)
-      ON CONFLICT (email) DO NOTHING
+      ON CONFLICT (email) DO UPDATE SET password_hash = EXCLUDED.password_hash
     `, ['admin@reverseauction.com', adminPasswordHash, 'System Administrator', 'admin', true]);
 
     console.log('✓ Default admin user created');

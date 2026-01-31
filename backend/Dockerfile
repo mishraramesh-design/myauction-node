@@ -1,20 +1,20 @@
-# Node.js Backend Dockerfile with Auto Setup
+# Node.js Backend Dockerfile
 FROM node:20-alpine
 
 # Install postgresql-client for database operations
-RUN apk add --no-cache postgresql-client
+RUN apk add --no-cache postgresql-client wget
 
 # Set working directory
 WORKDIR /app
 
-# Copy package files
-COPY package*.json ./
+# Copy backend package files
+COPY backend/package*.json ./
 
 # Install dependencies
-RUN npm install --production && npm install -g nodemon
+RUN npm install --production
 
-# Copy application code
-COPY . .
+# Copy backend application code
+COPY backend/ ./
 
 # Make entrypoint executable
 RUN chmod +x /app/entrypoint.sh

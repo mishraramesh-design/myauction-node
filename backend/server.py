@@ -312,7 +312,7 @@ async def place_bid(bid_input: BidCreate, current_user: User = Depends(get_curre
         raise HTTPException(status_code=404, detail="Auction not found")
     
     if isinstance(auction['end_time'], str):
-        auction['end_time'] = datetime.fromisoformat(auction['end_time'])
+        auction['end_time'] = datetime.fromisoformat(auction['end_time']).replace(tzinfo=timezone.utc)
     
     if auction['status'] == 'ended' or auction['end_time'] <= datetime.now(timezone.utc):
         raise HTTPException(status_code=400, detail="Auction has ended")

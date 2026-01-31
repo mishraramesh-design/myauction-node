@@ -1,0 +1,114 @@
+{
+  "design_system": {
+    "name": "BidFlow Design System",
+    "theme": "Swiss Precision",
+    "description": "A high-performance, minimalist auction interface prioritizing data clarity, trust, and speed. Uses a 'Swiss Style' aesthetic with high contrast and strict grids.",
+    "typography": {
+      "font_family": {
+        "heading": "Chivo, sans-serif",
+        "body": "Manrope, sans-serif",
+        "mono": "JetBrains Mono, monospace"
+      },
+      "weights": {
+        "heading": ["300", "900"],
+        "body": ["400", "500", "600"],
+        "mono": ["400", "700"]
+      },
+      "scale": {
+        "h1": "text-5xl md:text-7xl tracking-tighter font-black",
+        "h2": "text-3xl md:text-5xl tracking-tight font-bold",
+        "h3": "text-2xl md:text-3xl tracking-tight font-bold",
+        "body_lg": "text-lg leading-relaxed",
+        "body_base": "text-base leading-relaxed",
+        "caption": "text-xs tracking-widest uppercase font-semibold text-muted-foreground"
+      }
+    },
+    "colors": {
+      "palette": {
+        "primary": "#0A0A0A",
+        "primary_foreground": "#FFFFFF",
+        "secondary": "#F4F4F5",
+        "secondary_foreground": "#18181B",
+        "accent": "#0047FF",
+        "accent_foreground": "#FFFFFF",
+        "background": "#FFFFFF",
+        "surface": "#FAFAFA",
+        "border": "#E4E4E7",
+        "success": "#10B981",
+        "error": "#EF4444",
+        "warning": "#F59E0B"
+      },
+      "usage": {
+        "brand": "bg-primary text-primary-foreground",
+        "action": "bg-accent hover:bg-accent/90 text-white shadow-lg shadow-accent/20",
+        "surface_card": "bg-white border border-border/60 shadow-sm hover:shadow-md transition-all duration-300",
+        "live_indicator": "bg-red-500 animate-pulse"
+      }
+    },
+    "layout": {
+      "container": "max-w-7xl mx-auto px-4 sm:px-6 lg:px-8",
+      "grid_dashboard": "grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6",
+      "grid_marketing": "grid grid-cols-1 md:grid-cols-12 gap-8",
+      "spacing": {
+        "section": "py-24 md:py-32",
+        "element": "space-y-6"
+      }
+    },
+    "components": {
+      "buttons": {
+        "primary": "rounded-full px-8 py-6 text-base font-bold tracking-wide transition-transform active:scale-95",
+        "secondary": "rounded-full px-6 py-4 bg-secondary text-secondary-foreground hover:bg-secondary/80",
+        "ghost": "rounded-lg px-4 py-2 hover:bg-accent/10 hover:text-accent"
+      },
+      "cards": {
+        "auction_item": "group relative overflow-hidden rounded-2xl border border-border bg-white p-0 transition-all hover:border-accent/50",
+        "stat_card": "rounded-xl border border-border bg-surface p-6 flex flex-col justify-between h-full"
+      },
+      "inputs": {
+        "default": "h-12 rounded-lg border-input bg-transparent px-4 py-2 text-sm shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50"
+      }
+    },
+    "motion": {
+      "libraries": ["framer-motion", "react-fast-marquee", "sonner"],
+      "transitions": {
+        "default": "transition-all duration-300 ease-out",
+        "hover": "hover:-translate-y-1 hover:shadow-lg"
+      },
+      "animations": {
+        "fade_in": {
+          "initial": { "opacity": 0, "y": 20 },
+          "animate": { "opacity": 1, "y": 0 },
+          "transition": { "duration": 0.5 }
+        }
+      }
+    },
+    "assets": {
+      "images": {
+        "hero_bg": "https://images.unsplash.com/photo-1692538643781-96a38f4bb91e?crop=entropy&cs=srgb&fm=jpg&q=85",
+        "product_watch": "https://images.unsplash.com/photo-1670177257750-9b47927f68eb?crop=entropy&cs=srgb&fm=jpg&q=85",
+        "product_laptop": "https://images.unsplash.com/photo-1622131815526-eaae1e615381?crop=entropy&cs=srgb&fm=jpg&q=85",
+        "placeholder_avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed="
+      },
+      "icons": "lucide-react"
+    }
+  },
+  "instructions_to_main_agent": [
+    "1. SETUP: Install 'framer-motion', 'react-fast-marquee', 'sonner', 'clsx', 'tailwind-merge'.",
+    "2. FONTS: Add 'Chivo', 'Manrope', and 'JetBrains Mono' via Google Fonts in index.html or CSS.",
+    "3. THEME: Implement the 'Swiss Precision' color palette in tailwind.config.js. Use CSS variables for flexibility.",
+    "4. LAYOUT: Use the 'Bento Grid' strategy for the dashboard. Avoid equal-sized cards; vary spans for visual interest.",
+    "5. COMPONENTS: Build a 'LiveAuctionCard' component that features a countdown timer (using JetBrains Mono) and a 'Place Bid' button.",
+    "6. REAL-TIME: Use 'sonner' for toast notifications when a new bid is placed.",
+    "7. ACCESSIBILITY: Ensure all text meets APCA contrast standards. Use 'data-testid' on all interactive elements.",
+    "8. ANTI-PATTERNS: Do NOT use gradients for backgrounds. Use solid colors or subtle noise textures. Do NOT use 'Inter' font.",
+    "9. IMAGES: Use the provided Unsplash URLs for placeholders. Do not leave image sources empty."
+  ],
+  "universal_guidelines": [
+    "Avoid 'AI slop' aesthetics (generic centered layouts, gradients).",
+    "Use 2-3x more spacing than typical designs.",
+    "Every interaction needs micro-animations.",
+    "Use 'sonner' for toasts.",
+    "Components MUST use named exports.",
+    "Pages MUST use default exports."
+  ]
+}

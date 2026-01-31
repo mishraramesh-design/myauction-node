@@ -1,25 +1,17 @@
-# ---------- Build stage ----------
-FROM node:20 AS build
+FROM node:20-alpine
 
+# Create app directory
 WORKDIR /app
 
+# Install dependencies
 COPY package*.json ./
+RUN npm install --production
 
-# Fix CRA + CRACO + AJV incompatibility
-RUN npm install --legacy-peer-deps \
-  && npm install ajv@8 ajv-keywords@5 --legacy-peer-deps
-
+# Copy source code
 COPY . .
 
-# CRA / CRACO build
-ENV CI=false
-RUN npm run build
+# Backend port (change if your app uses a different one)
+EXPOSE 8001
 
-# ---------- Runtime stage ----------
-FROM nginx:alpine
-
-COPY --from=build /app/build /usr/share/nginx/html
-
-EXPOSE 80
-
-CMD ["nginx", "-g", "daemon off;"]
+# Start backend
+CMD ["npm", "start"]

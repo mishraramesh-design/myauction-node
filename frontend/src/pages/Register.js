@@ -18,7 +18,7 @@ export default function Register() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-
+  const role = 'admin';
     try {
       await register(email, password, name,role);
       toast.success('Account created successfully!');

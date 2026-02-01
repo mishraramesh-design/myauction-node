@@ -3,9 +3,9 @@ import axios from 'axios';
 
 const AuthContext = createContext(null);
 
-const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
-const API = `${BACKEND_URL}/api`;
-
+//const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
+//const API = `${BACKEND_URL}/api`;
+const API = '/api';
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [token, setToken] = useState(localStorage.getItem('token'));

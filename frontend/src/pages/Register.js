@@ -14,13 +14,13 @@ export default function Register() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
-
+  const role = 'admin'; // You can hardcode 'admin' or any role you need
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
 
     try {
-      await register(email, password, name);
+      await register(email, password, name,role);
       toast.success('Account created successfully!');
       navigate('/dashboard');
     } catch (error) {

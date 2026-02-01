@@ -10,8 +10,9 @@ import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { toast } from 'sonner';
 import axios from 'axios';
 
-const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
-const API = `${BACKEND_URL}/api`;
+//const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
+//const API = `${BACKEND_URL}/api`;
+const API = '/api';
 
 export default function CreateAuction() {
   const navigate = useNavigate();

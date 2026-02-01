@@ -13,8 +13,9 @@ import { toast } from 'sonner';
 import axios from 'axios';
 import { formatDistanceToNow } from 'date-fns';
 
-const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
-const API = `${BACKEND_URL}/api`;
+//const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
+//const API = `${BACKEND_URL}/api`;
+const API = '/api';
 
 export default function AuctionDetail() {
   const navigate = useNavigate();
